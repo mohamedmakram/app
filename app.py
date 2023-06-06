@@ -5,11 +5,36 @@ import itertools
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 
+pages_folder = "pages"
+
+# Create the main page
+# with open("/app.py", "w") as f:
+#     f.write("st.title('Main Page')\n\n")
+
+# Create the first page
+# with open(pages_folder + "/optimizeing_trading_strategies.py", "r") as f:
+#     f.write("st.title('Optimizeing Trading Strategies')\n\n")
+
 
 
 st.set_page_config(page_title= 'CSV Plotter')
 st.title('CSV Plotter')
 st.subheader('Feed me with your CSV file')
+
+# Create the main page
+# with open(pages_folder + "/main.py", "w") as f:
+#     f.write("import streamlit as st\n\n"
+#             "st.title('Main Page')\n\n"
+#             "st.sidebar.selectbox('Select a page', ['Page 1', 'Page 2'])")
+
+# # Create the first page
+# with open(pages_folder + "/page_1.py", "w") as f:
+#     f.write("import streamlit as st\n\n"
+#             "st.title('Page 1')\n\n"
+#             "st.write('This is page 1.')")
+
+
+
 
 
 
@@ -226,3 +251,7 @@ for upload_file in upload_files:
         fig_negative.update_yaxes(title_text="Whole Number Category for Large Data")
         # plot the graph
         st.plotly_chart(fig_negative)
+
+
+
+
