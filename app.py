@@ -51,7 +51,7 @@ for upload_file in upload_files:
         df_list = []
         df = pd.read_csv(upload_file)
         if 'TimeStamp' in df.columns:
-            print('Open')
+            # print('Open')
 
     # convert TimeStamp column to datetime type
             df['TimeStamp'] = pd.to_datetime(df['TimeStamp'])
@@ -62,7 +62,7 @@ for upload_file in upload_files:
             price = df['Price']
             volume = df['Volume']
             atr = df['ATR']
-            closed = df['Closed P/L']
+            closed = df['ClosedP/L']
             session = df[['London','NewYork', 'Tokyo', 'Sydney']]
             news = df[['EUR_FF', 'EUR_FPT', 'JPY_FF', 'JPY_FPT','GBP_FF', 'GBP_FPT', 'CHF_FF', 
                     'CHF_FPT', 'AUD_FF', 'AUD_FPT', 'CAD_FF','CAD_FPT', 'USD_FF', 'USD_FPT',
@@ -253,7 +253,7 @@ for upload_file in upload_files:
             st.plotly_chart(fig_negative)
 
         else:
-            print('Close')
+            # print('Close')
             
             # P/L plots
             # convert TimeStamp column to datetime type
