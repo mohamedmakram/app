@@ -50,6 +50,7 @@ for upload_file in upload_files:
         st.markdown('-----')
         df_list = []
         df = pd.read_csv(upload_file)
+        # df.rename(columns={'Profit': 'FloatingProfit'}, inplace=True)
         if 'TimeStamp' in df.columns:
             # print('Open')
 
@@ -58,29 +59,29 @@ for upload_file in upload_files:
 
             # select the desired columns to plot
             x = df['TimeStamp']
-            profit = df['Profit']
+            profit = df['FloatingProfit']
             price = df['Price']
             volume = df['Volume']
             atr = df['ATR']
-            closed = df['Closed P/L']
+            closed = df['ClosedP/L']
             session = df[['London','NewYork', 'Tokyo', 'Sydney']]
             news = df[['EUR_FF', 'EUR_FPT', 'JPY_FF', 'JPY_FPT','GBP_FF', 'GBP_FPT', 'CHF_FF', 
                     'CHF_FPT', 'AUD_FF', 'AUD_FPT', 'CAD_FF','CAD_FPT', 'USD_FF', 'USD_FPT',
                     'CNY_FF', 'CNY_FPT', 'NZD_FF','NZD_FPT']]
             
             profitOfNotNullJpyGbp= df[~((df['JPY_FF'].notna() == True) | (df['JPY_FPT'].notna() == True) | \
-                            (df['GBP_FF'].notna() == True) | (df['GBP_FPT'].notna() == True))]['Profit']
+                            (df['GBP_FF'].notna() == True) | (df['GBP_FPT'].notna() == True))]['FloatingProfit']
             dateOfNotNullJpyGbp = df[~((df['JPY_FF'].notna() == True) | (df['JPY_FPT'].notna() == True) | \
                             (df['GBP_FF'].notna() == True) | (df['GBP_FPT'].notna() == True))]['TimeStamp']
             
             
             # analyze for positive profit 
-            Profit_positive = df[df['Profit'] > 0] 
+            Profit_positive = df[df['FloatingProfit'] > 0] 
             # get whole number for positive profit 
             whole_number_positive = []
             unique_sequence_positive = Profit_positive['SequenceNo'].unique()
             for i in range(len(unique_sequence_positive)):
-                max_profit_positive = int(Profit_positive[Profit_positive['SequenceNo'] == unique_sequence_positive[i]]['Profit'].max())
+                max_profit_positive = int(Profit_positive[Profit_positive['SequenceNo'] == unique_sequence_positive[i]]['FloatingProfit'].max())
                 if max_profit_positive >= 0:
                     whole_number_positive.append(list(range(1, max_profit_positive+1)))
             # calculate sum for each category whole number 
@@ -89,11 +90,11 @@ for upload_file in upload_files:
             max_len_positive = max(whole_number_positive, key=lambda coll: len(coll))
 
             ## analyze for negative profit
-            Profit_negative = df[df['Profit'] < 0] 
+            Profit_negative = df[df['FloatingProfit'] < 0] 
             whole_number_negative = []
             unique_sequence_negative = Profit_negative['SequenceNo'].unique()
             for i in range(len(unique_sequence_negative)):
-                max_profit_positive = int(Profit_negative[Profit_negative['SequenceNo'] == unique_sequence_negative[i]]['Profit'].min())
+                max_profit_positive = int(Profit_negative[Profit_negative['SequenceNo'] == unique_sequence_negative[i]]['FloatingProfit'].min())
                 if max_profit_positive <= 0:
                     whole_number_negative.append(sorted(list(range(max_profit_positive, 0)), reverse=True))
             # calculate sum for each category whole number
@@ -267,9 +268,9 @@ for upload_file in upload_files:
 
             # profit data to plot
             # hours profit
-            hourly_profit = df.groupby('hourly')[['Profit']].agg('sum')
+            hourly_profit = df.groupby('hourly')[['FloatingProfit']].agg('sum')
             # daily profit
-            daily_profit = df.groupby('days')[['Profit']].agg('sum').round(2)
+            daily_profit = df.groupby('days')[['FloatingProfit']].agg('sum').round(2)
 
 
             # trades data to plot
@@ -282,7 +283,7 @@ for upload_file in upload_files:
 
             trace1 = go.Bar(
                 x = hourly_profit.index, 
-                y=hourly_profit['Profit'],
+                y=hourly_profit['FloatingProfit'],
                 name = 'Profit Close'
             )
             # trace2 = go.Bar(
@@ -309,7 +310,7 @@ for upload_file in upload_files:
             # Daily P/L
             trace1 = go.Bar(
                 x = daily_profit.index, 
-                y=daily_profit['Profit'],
+                y=daily_profit['FloatingProfit'],
                 name = 'Profit Close'
             )
             # trace2 = go.Bar(
