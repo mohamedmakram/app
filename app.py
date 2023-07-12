@@ -62,7 +62,7 @@ for upload_file in upload_files:
             price = df['Price']
             volume = df['Volume']
             atr = df['ATR']
-            closed = df['ClosedP/L']
+            closed = df['Closed P/L']
             session = df[['London','NewYork', 'Tokyo', 'Sydney']]
             news = df[['EUR_FF', 'EUR_FPT', 'JPY_FF', 'JPY_FPT','GBP_FF', 'GBP_FPT', 'CHF_FF', 
                     'CHF_FPT', 'AUD_FF', 'AUD_FPT', 'CAD_FF','CAD_FPT', 'USD_FF', 'USD_FPT',
@@ -257,13 +257,13 @@ for upload_file in upload_files:
             
             # P/L plots
             # convert TimeStamp column to datetime type
-            df['OpenTime'] = pd.to_datetime(df['OpenTime'])
+            df['Open Time'] = pd.to_datetime(df['Open Time'])
 
             # Parameters
             # extract hours
-            df['hourly'] = df['OpenTime'].dt.hour
+            df['hourly'] = df['Open Time'].dt.hour
             # extract days
-            df['days'] = df['OpenTime'].dt.day_name()
+            df['days'] = df['Open Time'].dt.day_name()
 
             # profit data to plot
             # hours profit
@@ -273,8 +273,8 @@ for upload_file in upload_files:
 
 
             # trades data to plot
-            trades_hourly = df.groupby('hourly')['TicketNo'].agg('count')
-            trades_daily = df.groupby('days')['TicketNo'].agg('count')
+            trades_hourly = df.groupby('hourly')['TicketNo.'].agg('count')
+            trades_daily = df.groupby('days')['TicketNo.'].agg('count')
 
             ## Analyzing for Whole number Dataset  
 
